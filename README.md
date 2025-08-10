@@ -26,9 +26,9 @@ This project is a web application built with Flask that scrapes data from multip
 - HTML/CSS  
 
 ## 💡 Future Improvements  
-- ⚡ Add data caching to improve performance  
-- 💾 Store scraped data in a database for offline access  
-- 🎨 Enhance UI/UX with more detailed data visualization  
+-  Add data caching to improve performance  
+-  Store scraped data in a database for offline access  
+-  Enhance UI/UX with more detailed data visualization  
 
 ## 👩‍💻 Author  
 Nur Syuhada Binti Azhar - 2024
