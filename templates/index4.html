@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Multi-Library Book Searching</h1>
+
+    <!-- Form for selecting library -->
+    <form method="GET" action="/">
+        <label for="library_select">Select Library:</label>
+        <select id="library_select" name="library_select">
+            <option value="all" {% if library_selected == 'all' %} selected {% endif %}>All Libraries</option>
+            <option value="utb" {% if library_selected == 'utb' %} selected {% endif %}>UTB Library</option>
+            <!-- option value="umk" {% if library_selected == 'umk' %} selected {% endif %}>UMK Library</option --> 
+            <option value="unissa" {% if library_selected == 'unissa' %} selected {% endif %}>UNISSA Library</option>
+        </select>
+        <!-- Include search query input field -->
+        <input type="text" id="search_query" name="search_query" placeholder="Enter title or keyword" value="{{ search_query }}">
+        <!-- Include hidden input field to preserve search query -->
+        <input type="hidden" name="search_query" value="{{ search_query }}">
+        <!-- Include buttons to switch library options and submit the form -->
+        <button type="submit" name="search_button" value="Search">Search</button>
+    </form>
+
+    <!-- Display pictures only on the main page -->
+    {% if not search_query %}
+    <div class="pictures-container">
+        <!--img src="{{ url_for('static', filename='images/1_UMK.png') }}" alt="Image UMK" -->
+        <img src="{{ url_for('static', filename='images/2_UTB.jpg') }}" alt="Image UTB">
+        <img src="{{ url_for('static', filename='images/3_UNISSA.png') }}" alt="Image UNISSA">
+        <!-- Add more images as needed -->
+    </div>
+    {% endif %}
+
+    <div class="new-search-container">
+        <!-- Conditionally display the "New Search" button -->
+        {% if search_query %}
+            <button type="button" onclick="location.href='/';">New Search</button>
+        {% endif %}
+    </div>
+
+    <!-- Display results based on selected library -->
+    <div class="results-container">
+        {% if library_selected == "all" %}
+            <!-- Display results from all three websites side by side -->
+            <div class="results-column utb-results">
+                <!-- Results from UTB Library -->
+                {% if data_a %}
+                    <h2>Results from UTB Library:</h2>
+                    <ul>
+                        {% for entry in data_a %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <strong>Publication Details:</strong> {{ entry['Publication Details'] }}<br>
+                                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                                <strong>Item Branch:</strong> {{ entry['ItemBranch'] }}<br>
+                                <!-- Add the hyperlink to the URL -->
+                                <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br>
+                            </li>
+                            <hr class="result-divider"> <!-- Add a horizontal line after each entry -->
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+            <!-- Results from UMK Library -->
+            <!-- div class="results-column umk-results">
+                {% if data_b %}
+                    <h2>Results from UMK Library:</h2>
+                    <ul>
+                        {% for entry in data_b %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <<strong>Year:</strong> {{ entry['Year'] }}<br>
+                                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                                Add the hyperlink to the URL
+                                <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br>>
+                            </li>
+                            <hr class="result-divider"> < Add a horizontal line after each entry>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div -->
+            
+            <!-- Results from UNISSA Library -->
+            <div class="results-column unissa-results">
+                {% if data_c %}
+                    <h2>Results from UNISSA Library:</h2>
+                    <ul>
+                        {% for entry in data_c %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <strong>Publication Details:</strong> {{ entry['Publication Details'] }}<br>
+                                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                                <!-- Add the hyperlink to the URL -->
+                                <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br>
+                            </li>
+                            <hr class="result-divider"> <!-- Add a horizontal line after each entry -->
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+        {% elif library_selected == "utb" %}
+            <!-- Display results from UTB Library -->
+            <div class="results-column-2">
+                {% if data_a %}
+                    <!-- Code for displaying UTB Library results -->
+                    <h2>Results from UTB Library:</h2>
+                    <ul>
+                        {% for entry in data_a %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <strong>Publication Details:</strong> {{ entry['Publication Details'] }}<br>
+                                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                                <strong>Item Branch:</strong> {{ entry['ItemBranch'] }}<br>
+                                <!-- Add the hyperlink to the URL -->
+                                <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br>
+                            </li>
+                            <hr class="result-divider"> <!-- Add a horizontal line after each entry -->
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+        {% elif library_selected == "umk" %}
+            <!-- Display results from UMK Library -->
+            <!--div class="results-column-2">
+                {% if data_b %}
+                    <Code for displaying UMK Library results >
+                    <h2>Results from PIB Library:</h2>
+                    <ul>
+                        {% for entry in data_b %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <<strong>Year:</strong> {{ entry['Year'] }}<br> >
+                                < <strong>Availability:</strong> {{ entry['Availability'] }}<br> >
+                                < Add the hyperlink to the URL >
+                                < <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br> >
+                            </li>
+                            <hr class="result-divider"> < Add a horizontal line after each entry >
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div-->
+            
+        {% elif library_selected == "unissa" %}
+            <!-- Display results from UNISSA Library -->
+            <div class="results-column-2">
+                {% if data_c %}
+                    <!-- Code for displaying UNISSA Library results -->
+                    <h2>Results from UNISSA Library:</h2>
+                    <ul>
+                        {% for entry in data_c %}
+                            <li class="result-item">
+                                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                                <strong>Publication Details:</strong> {{ entry['Publication Details'] }}<br>
+                                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                                <!-- Add the hyperlink to the URL -->
+                                <a href="{{ entry['Link'] }}" target="_blank" class="view-book-btn">View Book</a><br>
+                            </li>
+                            <hr class="result-divider"> <!-- Add a horizontal line after each entry -->
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            
+        {% endif %}
+    </div>
+
+    <!-- Back-to-top button -->
+    <button onclick="goToTop()" id="back-to-top-btn" title="Go to top">Top &#8593;</button>
+
+    <!-- JavaScript for the goToTop() function -->
+    <script>
+        function goToTop() {
+            // Smooth scroll to the top of the page
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show the button when user scrolls down
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("back-to-top-btn").style.display = "block";
+            } else {
+                document.getElementById("back-to-top-btn").style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

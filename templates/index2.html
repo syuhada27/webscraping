@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraped Data</title>
+</head>
+<body>
+    <h1>Scraped Data</h1>
+    <form action="{{ url_for('search') }}" method="get">
+        <label for="author">Search by Author:</label>
+        <input type="text" id="author" name="author">
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        {% for item in data %}
+            <li>{{ item.title }} by {{ item.author }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

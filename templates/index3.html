@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scraping</title>
+
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Scraping Data from Library</h1>
+
+    <!-- Search form -->
+    <form action="/" method="get">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <br>
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author">
+        <br>
+        <input type="submit" value="Search">
+    </form>
+
+    <ul>
+        {% for entry in data %}
+            <li>
+                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                <strong>Publication Details:</strong> {{ entry['Publication Details'] }}<br>
+                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+                <strong>Item Branch:</strong> {{ entry['ItemBranch'] }}<br>
+            </li>
+            <hr> <!-- Add a horizontal line after each entry -->
+        {% endfor %}
+    </ul>
+</body>
+</html>

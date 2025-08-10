@@ -1,0 +1,34 @@
+<!-- templates/index4.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Search Results</title>
+</head>
+<body>
+    <h1>Web Scraping</h1>
+
+    <!-- Form for Website B -->
+    <form method="GET" action="/">
+        <label for="title">Title (Website B):</label>
+        <input type="text" id="title" name="title" placeholder="Enter title">
+
+        <button type="submit">Search Website B</button>
+    </form>
+
+    <!-- Display results from Website B -->
+    <h2>Results from UMK Library:</h2>
+    <ul>
+        {% for entry in data_b %}
+            <li>
+                <strong>Title:</strong> {{ entry['Title'] }}<br>
+                <strong>Author:</strong> {{ entry['Author'] }}<br>
+                <strong>Year:</strong> {{ entry['Year'] }}<br>
+                <strong>Availability:</strong> {{ entry['Availability'] }}<br>
+            </li>
+            <hr> <!-- Add a horizontal line after each entry -->
+        {% endfor %}
+    </ul>
+</body>
+</html>
